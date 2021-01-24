@@ -1,6 +1,6 @@
 ## Sample
 
-![Preview](/assets/v.gif)
+![Preview](/assets/v.gif =250px)
 
 
 ## Author
