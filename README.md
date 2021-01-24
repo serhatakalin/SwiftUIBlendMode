@@ -9,7 +9,7 @@ Serhat Akalin, ios@serhatakalin.com
 
 Website: https://appleswiftui.com
 
-Twitter, https://twitter.com.com/appleswiftui
+Twitter, https://twitter.com/appleswiftui
 
 
 
