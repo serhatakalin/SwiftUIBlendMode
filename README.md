@@ -1,6 +1,6 @@
 ## Sample
 
-![](/assets/v.gif =300x)
+![Preview](/assets/v.gif)
 
 
 ## Author
