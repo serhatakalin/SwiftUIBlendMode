@@ -5,7 +5,7 @@
 
 ## Author
 
-Serhat Akalin, me@serhatakalin.com
+Serhat Akalin, ios@serhatakalin.com
 
 Website: https://appleswiftui.com
 
