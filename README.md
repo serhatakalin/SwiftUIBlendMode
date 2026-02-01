@@ -1,15 +1,9 @@
-## Sample
+# SwiftUI Blend Modes
 
-![Preview](/assets/v.gif)
+iOS app that demonstrates SwiftUI blend modes: pick a mode and see a yellow overlay blend with a photo in real time.
 
+## Preview
 
-## Author
-
-Serhat Akalin, ios@serhatakalin.com
-
-Website: https://appleswiftui.com
-
-Twitter, https://twitter.com/appleswiftui
-
+<img src="assets/blendmodes.png" width="300" alt="Preview" />
 
 

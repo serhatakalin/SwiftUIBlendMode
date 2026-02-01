@@ -7,9 +7,18 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @State private var selectedBlendMode = BlendMode.overlay
-    fileprivate let modes: [BlendMode] = [
+// MARK: - Constants
+
+private enum Constants {
+    static let demoImageName = "image"
+    static let pickerLabel = "Choose a blend mode"
+}
+
+// MARK: - BlendMode Extension
+
+extension BlendMode {
+    static var allCasesForPicker: [BlendMode] {
+        [
             .overlay,
             .normal,
             .color,
@@ -28,51 +37,74 @@ struct ContentView: View {
             .destinationOver,
             .sourceAtop,
             .saturation
-    ]
-
-    var body: some View {
-        createImageUI()
-        createModePicker()
+        ]
     }
+}
+
+// MARK: - ContentView
+
+@MainActor
+struct ContentView: View {
+    @State private var selectedBlendMode: BlendMode = .overlay
     
-    //MARK: main image ui is being created.
-    private func createImageUI() -> some View {
-        ZStack(alignment: .leading) {
-            Image("image")
-                .resizable()
+    var body: some View {
+        VStack(spacing: 0) {
+            BlendPreviewView(blendMode: selectedBlendMode)
             
-    //MARK: In order to apply the mod, a rectangular layer drawn on the image.
-            Rectangle()
-                .fill(Color.yellow)
-                .blendMode(selectedBlendMode)
+            BlendModePicker(selection: $selectedBlendMode)
+                .padding()
         }
-            .frame(minWidth: 0,
-                maxWidth: .infinity,
-                minHeight: 0,
-                maxHeight: .infinity,
-                alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+}
 
-    //MARK: created picker to change modes.
-    private func createModePicker() -> some View {
+// MARK: - Subviews
+
+@MainActor
+private struct BlendPreviewView: View {
+    let blendMode: BlendMode
+    
+    var body: some View {
         ZStack {
-            Picker(selection: $selectedBlendMode, label: Text("Please choose a blend mode")) {
-                ForEach(modes, id: \.self) { mode in
-                    let mName: String = "\(mode)"
-                    Text(mName)
+            Image(Constants.demoImageName)
+                .resizable()
+                .scaledToFill()
+            
+            Rectangle()
+                .fill(blendMode == .normal ? .clear : .yellow)
+                .blendMode(blendMode)
+        }
+        .clipped()
+        .animation(.easeInOut(duration: 0.2), value: blendMode)
+        .aspectRatio(4/3, contentMode: .fit)
+        .frame(maxWidth: .infinity)
+    }
+}
+
+@MainActor
+private struct BlendModePicker: View {
+    @Binding var selection: BlendMode
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 8) {
+            Text(Constants.pickerLabel)
+                .font(.headline)
+                .multilineTextAlignment(.center)
+            
+            Picker(Constants.pickerLabel, selection: $selection) {
+                ForEach(BlendMode.allCasesForPicker, id: \.self) { mode in
+                    Text(verbatim: String(describing: mode))
+                        .tag(mode)
                 }
             }
-                .frame(minWidth: 0,
-                    maxWidth: .infinity,
-                    minHeight: 0,
-                    maxHeight: .infinity,
-                    alignment: .topLeading)
+            .pickerStyle(.menu)
+            .frame(maxWidth: .infinity)
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+// MARK: - Previews
+
+#Preview {
+    ContentView()
 }
